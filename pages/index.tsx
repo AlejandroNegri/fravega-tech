@@ -1,12 +1,12 @@
 import { UserCard } from "@/components/UserCard";
 import { getUsers } from "@/services/Github";
 import { User } from "@/types/github";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   useEffect(() => {
     fetchUsers();
@@ -24,16 +24,33 @@ export default function Home() {
     }
   };
 
+  const toggleFavorite = (userId: number) => {
+    setFavorites((prev) =>
+      prev.includes(userId)
+        ? prev.filter((id) => id !== userId)
+        : [...prev, userId]
+    );
+  };
+
   return (
-    <div
-      className={`grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <h1>Usuarios de Github</h1>
-      {isLoading ? (
-        <p>Cargando...</p>
-      ) : (
-        users.map((user) => <UserCard key={user.id} user={user} />)
-      )}
+    <div className="p-8 bg-gray-100">
+      <h1 className="text-center text-4xl mb-8 text-gray-700">
+        Usuarios de Github
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-5xl mx-auto justify-items-center">
+        {isLoading ? (
+          <p>Cargando...</p>
+        ) : (
+          users.map((user) => (
+            <UserCard
+              key={user.id}
+              user={user}
+              isFavorite={favorites.includes(user.id)}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }

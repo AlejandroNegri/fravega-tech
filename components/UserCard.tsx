@@ -1,22 +1,40 @@
 import { User } from "@/types/github";
+import clsx from "clsx";
 import Image from "next/image";
 
 type UserCardProps = {
   user: User;
+  isFavorite: boolean;
+  onToggleFavorite: (userId: number) => void;
 };
 
-export function UserCard({ user }: UserCardProps) {
+export function UserCard({
+  user,
+  isFavorite,
+  onToggleFavorite,
+}: UserCardProps) {
   return (
-    <div className="flex flex-col items-center border border-[#ddd] rounded-lg p-4 bg-white">
-      <div>
+    <div className="relative w-full max-w-xs flex flex-col items-center border border-gray-200 rounded-lg p-2 bg-white shadow">
+      <button
+        onClick={() => onToggleFavorite(user.id)}
+        className={clsx(
+          "absolute top-3 right-3 border rounded-full cursor-pointer text-xl w-9 h-9 flex items-center justify-center z-10 shadow-md",
+          isFavorite
+            ? "bg-amber-300 border-amber-300 text-gray-700"
+            : "bg-white/95 border-gray-200"
+        )}
+      >
+        {isFavorite ? "★" : "☆"}
+      </button>
+      <div className="relative w-full aspect-square mb-4">
         <Image
           src={user.avatar_url}
-          width={120}
-          height={120}
           alt={user.login}
-          className="rounded-full"
+          className="rounded-lg"
+          fill
         />
       </div>
+      <h2 className="text-xl mb-4 text-gray-700 text-center">{user.login}</h2>
     </div>
   );
 }
