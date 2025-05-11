@@ -16,7 +16,7 @@ export function UserCard({
 }: UserCardProps) {
   return (
     <div
-      className="relative w-full max-w-xs flex flex-col items-center border border-gray-200 rounded-lg p-2 bg-white shadow hover:cursor-pointer"
+      className="relative w-full max-w-xs flex flex-col items-center border border-gray-200 rounded-lg p-2 bg-white shadow hover:cursor-pointer hover:-translate-y-1 hover:shadow-lg "
       onClick={() => router.push(`/user/${user.login}`)}
     >
       <button
@@ -41,6 +41,7 @@ export function UserCard({
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
+          unoptimized // quitar al final
         />
       </div>
       <h2 className="text-xl mb-4 text-gray-700 text-center">{user.login}</h2>

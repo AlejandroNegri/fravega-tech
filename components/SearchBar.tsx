@@ -16,7 +16,7 @@ export function SearchBar({ value, onChange, onSubmit }: SearchBarProps) {
       />
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-500 rounded text-white cursor-pointer hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-500 rounded text-white cursor-pointer hover:bg-blue-600"
       >
         Buscar
       </button>

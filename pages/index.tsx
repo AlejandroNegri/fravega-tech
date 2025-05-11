@@ -3,12 +3,13 @@ import { UserCard } from "@/components/UserCard";
 import { getUsers, searchUsers } from "@/services/Github";
 import { User } from "@/types/github";
 import { useState, useEffect } from "react";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [favorites, setFavorites] = useState<number[]>([]);
   const [searchText, setSearchText] = useState("");
+  const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     fetchUsers();
@@ -24,14 +25,6 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const toggleFavorite = (userId: number) => {
-    setFavorites((prev) =>
-      prev.includes(userId)
-        ? prev.filter((id) => id !== userId)
-        : [...prev, userId]
-    );
   };
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -53,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <div className="p-8 bg-gray-100">
+    <div>
       <h1 className="text-center text-4xl mb-8 text-gray-700">
         Usuarios de Github
       </h1>
