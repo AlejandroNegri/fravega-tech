@@ -2,18 +2,18 @@ import Image from "next/image";
 import clsx from "clsx";
 import { GetStat } from "./GetStat";
 import { User } from "@/types/github";
-import { useFavorites } from "@/hooks/useFavorites";
 
 type UserDetailsCardProps = {
   user: User;
+  favorites: number[];
+  toggleFavorite: (id: number) => void;
 };
 
-export function UserDetailsCard({ user }: UserDetailsCardProps) {
-  const { favorites, toggleFavorite } = useFavorites();
-
-  console.log("favorites", favorites);
-  console.log("user.id", user.id);
-
+export function UserDetailsCard({
+  user,
+  favorites,
+  toggleFavorite,
+}: UserDetailsCardProps) {
   const isFavorite = favorites.includes(user.id);
 
   return (

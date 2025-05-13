@@ -3,6 +3,7 @@ import { Repo, User } from "@/types/github";
 import { getUser, getUserRepos } from "@/services/Github";
 import { UserDetailsCard } from "@/components/UserDetailsCard";
 import { UserDetailRepos } from "@/components/UserDetailRepos";
+import { useFavoritesContext } from "@/context/FavoritesContext";
 
 type UserPageProps = {
   user: User;
@@ -10,12 +11,19 @@ type UserPageProps = {
 };
 
 export default function UserPage({ user, repos }: UserPageProps) {
+  const { favorites, toggleFavorite } = useFavoritesContext();
+
   return (
     <div className="max-w-5xl mx-auto">
       <Link href="/" className="text-blue-500 hover:text-blue-600">
         ← Volver a la página principal
       </Link>
-      <UserDetailsCard user={user} />
+
+      <UserDetailsCard
+        user={user}
+        favorites={favorites}
+        toggleFavorite={toggleFavorite}
+      />
       <UserDetailRepos repos={repos} />
     </div>
   );

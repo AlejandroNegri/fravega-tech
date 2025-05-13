@@ -9,8 +9,6 @@ export function useFavorites() {
         ? prev.filter((id) => id !== userId)
         : [...prev, userId]
     );
-
-    console.log("favorites", favorites);
   };
 
   return {
